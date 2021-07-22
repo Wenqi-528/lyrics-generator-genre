@@ -30,66 +30,55 @@ Coding center code - comment out the following 4 lines of code when ready for pr
 # load up the model into memory
 # you will need to have all your trained model in the app/ directory.
 #modelpath='projects/42a0b784-c781-4a15-8706-3a970b6ddea1/lyrics_generator/app'
-airock = aitextgen(to_gpu=False,model_folder='/projects/42a0b784-c781-4a15-8706-3a970b6ddea1/lyrics_generator/app/aitextgen/Rock')
-aijazz = aitextgen(to_gpu=False,model_folder='/projects/42a0b784-c781-4a15-8706-3a970b6ddea1/lyrics_generator/app/aitextgen/Jazz')
-aihiphop = aitextgen(to_gpu=False,model_folder='/projects/42a0b784-c781-4a15-8706-3a970b6ddea1/lyrics_generator/app/aitextgen/Hiphop')
+airock = aitextgen(to_gpu=False,model_folder='aitextgen/Rock')
+aijazz = aitextgen(to_gpu=False,model_folder='aitextgen/Jazz')
+aihiphop = aitextgen(to_gpu=False,model_folder='aitextgen/Hiphop')
 
 # setup the webserver
 # port may need to be changed if there are multiple flask servers running on same server
-port = 12435
+#port = 12435
 
-base_url = get_base_url(port)
-app = Flask(__name__, static_url_path=base_url+'static')
+#base_url = get_base_url(port)
+app = Flask(__name__)
 
 '''
 Deployment code - uncomment the following line of code when ready for production
 '''
 #app = Flask(__name__)
 
-#@app.route('/')
-@app.route(base_url) 
+@app.route('/')
+#@app.route(base_url) 
 def home():
     return render_template('lyricsgenerator_mainpage.html', generated=None)
 
-#@app.route('/home')
-@app.route(base_url + '/home')
+@app.route('/home')
+#@app.route(base_url + '/home')
 def home2():
     return render_template('lyricsgenerator_mainpage.html', generated=None)
 
-#@app.route('/about')
-@app.route(base_url + '/about')
+@app.route('/about')
+#@app.route(base_url + '/about')
 def about():
     return render_template('lyricsgenerator_about.html', generated=None)
 
-
-
-
-
-
-
-
 ######################Hippop#####################
 
-#@app.route('/', methods=['POST'])
-@app.route(base_url, methods=['POST'])
+@app.route('/', methods=['POST'])
+#@app.route(base_url, methods=['POST'])
 def home_post_hiphop():
     return redirect(url_for('results_hiphop'))
 
-#@app.route('/results')
-@app.route(base_url + '/results_hiphop')
+@app.route('/results_hiphop')
+#@app.route(base_url + '/results_hiphop')
 def results_hiphop():
     return render_template('Hippop.html', generated=None)
 
-#@app.route('/generate_text', methods=["POST"])
-@app.route(base_url + '/generate_text_hiphop', methods=["POST"])
+@app.route('/generate_text_hiphop', methods=["POST"])
+#@app.route(base_url + '/generate_text_hiphop', methods=["POST"])
 def generate_text_hiphop():
     """
     view function that will return json response for generated text. 
     """
-    
-    
-    
-    
 
     prompt = request.form['prompt']
     if prompt is not None:
@@ -108,18 +97,18 @@ def generate_text_hiphop():
 
 #####################Rock#######################
 
-#@app.route('/', methods=['POST'])
-@app.route(base_url, methods=['POST'])
+@app.route('/', methods=['POST'])
+#@app.route(base_url, methods=['POST'])
 def home_post_rock():
     return redirect(url_for('results_rock'))
 
-#@app.route('/results')
-@app.route(base_url + '/results_rock')
+@app.route('/results_rock')
+#@app.route(base_url + '/results_rock')
 def results_rock():
     return render_template('Rock.html', generated=None)
 
-#@app.route('/generate_rock_text', methods=["POST"])
-@app.route(base_url + '/generate_rock_text', methods=["POST"])
+@app.route('/generate_rock_text', methods=["POST"])
+#@app.route(base_url + '/generate_rock_text', methods=["POST"])
 def generate_rock_text():
     """
     view function that will return json response for generated text. 
@@ -142,18 +131,18 @@ def generate_rock_text():
 
 ################JAZZ#################
 
-#@app.route('/', methods=['POST'])
-@app.route(base_url, methods=['POST'])
+@app.route('/', methods=['POST'])
+#@app.route(base_url, methods=['POST'])
 def home_post_jazz():
     return redirect(url_for('results_jazz'))
 
-#@app.route('/results_jazz')
-@app.route(base_url + '/results_jazz')
+@app.route('/results_jazz')
+#@app.route(base_url + '/results_jazz')
 def results_jazz():
     return render_template('Jazz.html', generated=None)
 
-#@app.route('/generate_text', methods=["POST"])
-@app.route(base_url + '/generate_jazz_text', methods=["POST"])
+@app.route('/generate_jazz_text', methods=["POST"])
+#@app.route(base_url + '/generate_jazz_text', methods=["POST"])
 def generate_jazz_text():
     """
     view function that will return json response for generated text. 
